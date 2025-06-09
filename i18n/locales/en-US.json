@@ -1,0 +1,11 @@
+{
+
+  "welcome": "Welcome to Our App",
+  "description": "This is a multilingual application with GlueStack UI",
+  "featuresTitle": "Features",
+  "featuresMultilingual": "Multiple language support",
+  "featuresRtl": "RTL support for Arabic",
+  "featuresTheme": "Light and dark theme",
+  "featuresModern": "Modern UI components"
+
+}
