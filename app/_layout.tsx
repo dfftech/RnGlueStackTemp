@@ -17,13 +17,14 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '@/i18n';
 import { AppHeader } from '@/utils/components/app.header';
 import Splash from '@/app/index';
+import AppNavBar from '@/utils/components/app.navbar';
 
 const AppLayout = () => {
   useSignals();
 
   const router = useNavigation() as NavigationProp<any>;
   const [loading, setLoading] = useState(true);
-
+  const [page, setPage] = useState(3);
 
   // Effect to watch RouterEvent and trigger navigation
   useEffect(() => {
@@ -63,6 +64,12 @@ const AppLayout = () => {
       <Stack
         initialRouteName="splash"
         screenOptions={{ headerShown: false, gestureEnabled: false }}
+      />
+      <AppNavBar
+        icons={['Home', 'MessageSquare', 'Menu', 'User', 'Settings']}
+        navColor={'#4687FD'}
+        selected={page}
+        cb={(id) => setPage(id)}
       />
     </I18nextProvider>
   );
