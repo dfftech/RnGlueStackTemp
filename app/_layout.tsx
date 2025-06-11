@@ -1,21 +1,16 @@
-import {
-  RouterChange,
-  RouterEvent,
-} from '@/utils/services/app.event';
-import { useSignals } from '@preact/signals-react/runtime';
+import {RouterChange, RouterEvent} from '@/utils/services/app.event';
+import {useSignals} from '@preact/signals-react/runtime';
 import AppHttp from '@/utils/services/app.http';
-import React, { useEffect, useState } from 'react';
-import {
-  AppRouter,
-} from '../utils/services/app.router';
-import { effect } from '@preact/signals-react';
-import { Stack, useNavigation } from 'react-native-auto-route';
-import type { NavigationProp } from 'react-native-auto-route';
+import React, {useEffect, useState} from 'react';
+import {AppRouter} from '../utils/services/app.router';
+import {effect} from '@preact/signals-react';
+import {Stack, useNavigation} from 'react-native-auto-route';
+import type {NavigationProp} from 'react-native-auto-route';
 
-import { AppToast } from '@/utils/components/app.toast';
-import { I18nextProvider } from 'react-i18next';
+import {AppToast} from '@/utils/components/app.toast';
+import {I18nextProvider} from 'react-i18next';
 import i18n from '@/i18n';
-import { AppHeader } from '@/utils/components/app.header';
+import {AppHeader} from '@/utils/components/app.header';
 import Splash from '@/app/index';
 import AppNavBar from '@/utils/components/app.navbar';
 
@@ -41,7 +36,6 @@ const AppLayout = () => {
       setTimeout(() => {
         router.navigate(screen, params);
       }, 100);
-
     });
 
     return () => {
@@ -52,9 +46,7 @@ const AppLayout = () => {
   }, [router]);
 
   if (loading) {
-    return (
-      <Splash />
-    );
+    return <Splash />;
   }
 
   return (
@@ -63,13 +55,13 @@ const AppLayout = () => {
       <AppHeader />
       <Stack
         initialRouteName="splash"
-        screenOptions={{ headerShown: false, gestureEnabled: false }}
+        screenOptions={{headerShown: false, gestureEnabled: false}}
       />
       <AppNavBar
         icons={['Home', 'MessageSquare', 'Menu', 'User', 'Settings']}
         navColor={'#4687FD'}
         selected={page}
-        cb={(id) => setPage(id)}
+        cb={id => setPage(id)}
       />
     </I18nextProvider>
   );
