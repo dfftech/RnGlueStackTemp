@@ -13,6 +13,7 @@ import i18n from '@/i18n';
 import {AppHeader} from '@/utils/components/app.header';
 import Splash from '@/app/index';
 import AppNavBar from '@/utils/components/app.navbar';
+import {SafeAreaView} from 'react-native';
 
 const AppLayout = () => {
   useSignals();
@@ -57,12 +58,21 @@ const AppLayout = () => {
         initialRouteName="splash"
         screenOptions={{headerShown: false, gestureEnabled: false}}
       />
-      <AppNavBar
-        icons={['Home', 'MessageSquare', 'Menu', 'User', 'Settings']}
-        navColor={'#4687FD'}
-        selected={page}
-        cb={id => setPage(id)}
-      />
+      <SafeAreaView className="flex-1 justify-end">
+        <AppNavBar
+          icons={[
+            'Home',
+            'MessageSquare',
+            'Menu',
+            'User',
+            'Settings',
+            'MagnetIcon',
+          ]}
+          navColor={'#4687FD'}
+          selected={page}
+          cb={id => setPage(id)}
+        />
+      </SafeAreaView>
     </I18nextProvider>
   );
 };
