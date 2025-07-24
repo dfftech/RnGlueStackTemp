@@ -45,9 +45,9 @@ const AppLayout = () => {
         RouterChange(AppRouter.signin, undefined);
         return;
       }
-      //setTimeout(() => {
-      router.navigate(screen, params);
-      //}, 1);
+      setTimeout(() => {
+        router.navigate(screen, params);
+      }, 1);
     });
 
     return () => {
