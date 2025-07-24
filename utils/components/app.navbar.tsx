@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
-  Dimensions,
   TouchableOpacity,
   Animated,
   useColorScheme,
@@ -10,7 +10,7 @@ import {
 import * as icons from 'lucide-react-native';
 
 type IconName = keyof typeof icons;
-const {width} = Dimensions.get('window');
+
 
 interface AppNavBarProps {
   selected?: number;
@@ -27,7 +27,6 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
   iconColor,
   navColor,
   selectedIconColor,
-  mainOffSetAndroid = 0,
   cb,
   icons: iconNames = ['Home', 'Search', 'Menu', 'User', 'Settings'], // default fallback
 }) => {
@@ -37,7 +36,7 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
   const resolvedIconColor = iconColor ?? (isDark ? '#cbd5e1' : '#1e293b');
   const resolvedPrimColor = navColor ?? (isDark ? '#2563eb' : '#4687FD');
   const resolvedSelectedIconColor = selectedIconColor ?? '#ffffff';
-  const backgroundColor = isDark ? '#1e293b' : 'white';
+  const backgroundColor = isDark ? 'rgba(30, 41, 59, 0.95)' : 'rgba(248, 250, 252, 0.75)';
 
   const iconComponents = iconNames.map(
     name =>
@@ -50,6 +49,10 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
   const totalIcons = iconComponents.length;
   const initialSelected = Math.max(1, Math.min(selected, totalIcons));
 
+  // Calculate menu width based on number of icons (60px per icon + padding)
+  const menuWidth = totalIcons * 60 + 20;
+  const iconWidth = 60;
+
   const [sliderPosition] = useState(new Animated.Value(initialSelected));
   const [animatedValues] = useState(() => {
     const values: any = {};
@@ -58,7 +61,7 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
         id: new Animated.Value(i === initialSelected ? 0 : 1),
         h: new Animated.Value(i === initialSelected ? 100 : 0),
         i: new Animated.Value(i === initialSelected ? 1 : 0),
-        hh: new Animated.Value(i === initialSelected ? 5 : 10),
+        hh: new Animated.Value(i === initialSelected ? 0 : 0),
       };
     }
     return values;
@@ -88,7 +91,7 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
           useNativeDriver: false,
         }),
         Animated.timing(selectedValues.hh, {
-          toValue: 5,
+          toValue: 0,
           duration: 300,
           useNativeDriver: false,
         }),
@@ -114,7 +117,7 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
               useNativeDriver: false,
             }),
             Animated.timing(values.hh, {
-              toValue: 10,
+              toValue: 0,
               duration: 200,
               useNativeDriver: false,
             }),
@@ -140,77 +143,161 @@ const AppNavBar: React.FC<AppNavBarProps> = ({
     startAnimation(initialSelected);
   }, [initialSelected, startAnimation]);
 
+  // Fixed interpolation for proper centering
   const navrr = sliderPosition.interpolate({
-    inputRange: Array.from({length: totalIcons}, (_, i) => i + 1),
+    inputRange: Array.from({ length: totalIcons }, (_, i) => i + 1),
     outputRange: iconComponents.map(
-      (_, i) => (width / totalIcons) * i + width / (2 * totalIcons) - 30,
+      (_, i) => 10 + (i * iconWidth) + (iconWidth / 2) - 25, // Proper centering calculation
     ),
     extrapolate: 'clamp',
   });
 
   return (
-    <View className="absolute bottom-[-30] w-full items-center justify-center">
-      {/* Background */}
+    <View className="absolute bottom-1 w-full items-center justify-center">
+      {/* Enhanced Glossy Rounded Menu Container */}
       <View
-        className="absolute bottom-0 w-full h-[80px] shadow-md z-0"
+        className="relative"
         style={{
+          width: menuWidth,
+          height: 64,
           backgroundColor,
-          shadowColor: '#000',
-          shadowOffset: {width: 1, height: 4},
-          shadowOpacity: 0.5,
-          shadowRadius: 10,
-        }}
-      />
+          borderRadius: 32,
+          // Enhanced glossy effect with multiple shadows
+          shadowColor: isDark ? '#000' : '#64748b',
+          shadowOffset: { width: 0, height: isDark ? 8 : 6 },
+          shadowOpacity: isDark ? 0.25 : 0.2,
+          shadowRadius: isDark ? 16 : 12,
+          elevation: 12,
+          // Light theme specific styling
+          ...(isDark ? {} : {
+            borderWidth: 1,
+            borderColor: 'rgba(255, 255, 255, 0.8)',
+          }),
+        }}>
 
-      {/* Slider Bubble */}
-      <Animated.View
-        style={{position: 'absolute', bottom: 0, left: navrr}}
-        className="z-10">
+        {/* Enhanced Glossy overlay for better glass effect */}
         <View
-          className="absolute justify-center items-center"
           style={{
-            backgroundColor: resolvedPrimColor,
-            width: 60,
-            height: 60,
-            borderRadius: 30,
-            bottom: 60 - 30,
+            position: 'absolute',
+            top: 0,
             left: 0,
+            right: 0,
+            height: '70%',
+            backgroundColor: isDark
+              ? 'rgba(255, 255, 255, 0.05)'
+              : 'rgba(255, 255, 255, 0.9)',
+            borderTopLeftRadius: 32,
+            borderTopRightRadius: 32,
           }}
         />
-      </Animated.View>
 
-      {/* Selected Icons */}
-      <View className="absolute bottom-0 w-full h-[100px] flex-row justify-around py-5 z-20">
-        {iconComponents.map((IconComponent, i) => (
-          <TouchableOpacity key={i} onPress={() => startAnimation(i + 1)}>
-            <Animated.View
+        {/* Additional strong glossy layer for light theme */}
+        {!isDark && (
+          <>
+            <View
               style={{
-                opacity: animatedValues[i + 1].i,
-                transform: [{translateY: animatedValues[i + 1].hh}],
-              }}>
-              <IconComponent size={32} color={resolvedSelectedIconColor} />
-            </Animated.View>
-          </TouchableOpacity>
-        ))}
-      </View>
+                position: 'absolute',
+                top: 1,
+                left: 1,
+                right: 1,
+                height: '50%',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                borderTopLeftRadius: 31,
+                borderTopRightRadius: 31,
+              }}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                top: 3,
+                left: 3,
+                right: 3,
+                height: '25%',
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderTopLeftRadius: 29,
+                borderTopRightRadius: 29,
+              }}
+            />
+          </>
+        )}
 
-      {/* Default Row Icons */}
-      <View className="absolute -bottom-5 w-full h-[100px] flex-row justify-around py-5 z-10">
-        {iconComponents.map((IconComponent, i) => (
-          <TouchableOpacity
-            key={i}
-            onPress={() => startAnimation(i + 1)}
-            className="items-center"
-            style={{width: `${100 / totalIcons}%`, paddingTop: 8}}>
-            <Animated.View
+        {/* Clean Selected Indicator - No border */}
+        <Animated.View
+          style={{
+            position: 'absolute',
+            bottom: 9,
+            left: navrr,
+            zIndex: 10,
+          }}>
+          <View
+            style={{
+              width: 46,
+              height: 46,
+              borderRadius: 23,
+              // Clean gradient effect without border
+              backgroundColor: resolvedPrimColor,
+              // Multiple shadows for depth
+              shadowColor: resolvedPrimColor,
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.4,
+              shadowRadius: 8,
+              elevation: 8,
+              // Center the content
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            {/* Inner glossy highlight */}
+            <View
               style={{
-                opacity: animatedValues[i + 1].id,
-                transform: [{translateY: animatedValues[i + 1].h}],
-              }}>
-              <IconComponent size={25} color={resolvedIconColor} />
-            </Animated.View>
-          </TouchableOpacity>
-        ))}
+                position: 'absolute',
+                top: 3,
+                left: 3,
+                right: 3,
+                height: '40%',
+                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              }}
+            />
+            {/* Selected Icon - Centered in circle */}
+            <View style={{ zIndex: 1 }}>
+              {iconComponents.map((IconComponent, i) => (
+                <Animated.View
+                  key={i}
+                  style={{
+                    opacity: animatedValues[i + 1].i,
+                    position: 'absolute',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 46,
+                    height: 46,
+                    left: -23,
+                    top: -23,
+                  }}>
+                  <IconComponent size={22} color={resolvedSelectedIconColor} />
+                </Animated.View>
+              ))}
+            </View>
+          </View>
+        </Animated.View>
+
+        {/* Default Row Icons */}
+        <View className="absolute inset-0 flex-row justify-around items-center px-2 z-10">
+          {iconComponents.map((IconComponent, i) => (
+            <TouchableOpacity
+              key={i}
+              onPress={() => startAnimation(i + 1)}
+              className="w-[46px] h-[46px] items-center justify-center">
+              <Animated.View
+                style={{
+                  opacity: animatedValues[i + 1].id,
+                  transform: [{ translateY: animatedValues[i + 1].h }],
+                }}>
+                <IconComponent size={20} color={resolvedIconColor} />
+              </Animated.View>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
     </View>
   );

@@ -4,10 +4,9 @@ import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
-import { ColorMode, RouterChange } from '@/utils/services/app.event';
+import { ColorMode } from '@/utils/services/app.event';
 import { useSignals } from '@preact/signals-react/runtime';
-import { Button, ButtonText } from '@/components/ui/button';
-import { AppRouter } from '@/utils/services/app.router';
+
 
 
 export default function HomePage() {
@@ -34,14 +33,6 @@ export default function HomePage() {
             <Text>• {t('featuresTheme')}</Text>
             <Text>• {t('featuresModern')}</Text>
             <Text>•  ColorMode: {ColorMode.value}</Text>
-            <Button
-              variant="solid"
-              onPress={() => {
-                RouterChange(AppRouter.signin, undefined);
-              }}
-            >
-              <ButtonText>{t('goToSignin')}</ButtonText>
-            </Button>
           </VStack>
         </Box>
       </VStack>

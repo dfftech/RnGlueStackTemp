@@ -4,10 +4,11 @@ import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
-import { ColorMode, RouterChange } from '@/utils/services/app.event';
+
 import { useSignals } from '@preact/signals-react/runtime';
-import { Button, ButtonText } from '@/components/ui/button';
-import { AppRouter } from '@/utils/services/app.router';
+
+import { AppLang } from '@/utils/components/app.lang';
+import { AppTheme } from '@/utils/components/app.theme';
 
 
 export default function SettingsPage() {
@@ -23,27 +24,8 @@ export default function SettingsPage() {
         <Text size="lg" style={{ textAlign: 'center' }}>
           {t('description')}
         </Text>
-
-        <Box style={{ marginTop: 32 }}>
-          <Heading size="2xl" style={{ marginBottom: 16, textAlign: 'center' }}>
-            {t('featuresTitle')}
-          </Heading>
-          <VStack space="md">
-            <Text>• {t('featuresMultilingual')}</Text>
-            <Text>• {t('featuresRtl')}</Text>
-            <Text>• {t('featuresTheme')}</Text>
-            <Text>• {t('featuresModern')}</Text>
-            <Text>•  ColorMode: {ColorMode.value}</Text>
-            <Button
-              variant="solid"
-              onPress={() => {
-                RouterChange(AppRouter.signin, undefined);
-              }}
-            >
-              <ButtonText>{t('goToSignin')}</ButtonText>
-            </Button>
-          </VStack>
-        </Box>
+        <AppLang />
+        <AppTheme />
       </VStack>
     </Box>
   );
