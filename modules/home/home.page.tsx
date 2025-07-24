@@ -14,9 +14,9 @@ export default function HomePage() {
   const { t } = useTranslation();
 
   return (
-    <Box className="flex-1 px-4 py-4 items-center justify-center">
+    <Box className="flex-1 p-8 items-center justify-center">
       <VStack space="xl" style={{ alignItems: 'center' }}>
-        <Heading size="4xl" style={{ textAlign: 'center' }}>
+        <Heading size="3xl" style={{ textAlign: 'center' }}>
           {t('welcome')}  {t('home')}
         </Heading>
         <Text size="lg" style={{ textAlign: 'center' }}>
@@ -24,7 +24,7 @@ export default function HomePage() {
         </Text>
 
         <Box style={{ marginTop: 32 }}>
-          <Heading size="2xl" style={{ marginBottom: 16, textAlign: 'center' }}>
+          <Heading size="2xl">
             {t('featuresTitle')}
           </Heading>
           <VStack space="md">

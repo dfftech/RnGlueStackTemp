@@ -9,6 +9,8 @@ import { useSignals } from '@preact/signals-react/runtime';
 
 import { AppLang } from '@/utils/components/app.lang';
 import { AppTheme } from '@/utils/components/app.theme';
+import { HStack } from '@/components/ui/hstack';
+import React from 'react';
 
 
 export default function SettingsPage() {
@@ -16,18 +18,22 @@ export default function SettingsPage() {
   const { t } = useTranslation();
 
   return (
-    <Box className="flex-1 px-4 py-4 items-center justify-center">
-      <VStack space="xl" style={{ alignItems: 'center' }}>
-        <Heading size="4xl" style={{ textAlign: 'center' }}>
+    <Box className="flex-1 items-center justify-center p-4">
+      <VStack space="xl" >
+        <Heading size="3xl">
           {t('welcome')} {t('settings')}
         </Heading>
-        <Text size="lg" style={{ textAlign: 'center' }}>
+        <Text size="lg" >
           {t('description')}
         </Text>
-        <AppLang />
-        <AppTheme />
-      </VStack>
-    </Box>
+        <HStack space="lg" className='flex items-center'>
+          <Text size="lg">{t('language')}: </Text> <AppLang />
+        </HStack>
+        <HStack space="lg" className='flex items-center'>
+          <Text size="lg">{t('theme')}: </Text> <AppTheme />
+        </HStack>
+      </VStack >
+    </Box >
   );
 }
 

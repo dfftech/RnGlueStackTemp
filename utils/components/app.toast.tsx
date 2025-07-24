@@ -10,6 +10,7 @@ import { Heading } from '@/components/ui/heading';
 import { Alert, AlertIcon, AlertText } from '@/components/ui/alert';
 import { useSignals } from '@preact/signals-react/runtime';
 import { InfoIcon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 
 export const AppToast = () => {
   useSignals();
@@ -32,7 +33,7 @@ export const AppToast = () => {
       render: ({ id }) => {
         return (
           <Toast nativeID={id} action="error" variant="solid">
-            <ToastTitle>{ToastMessage.value.message}</ToastTitle>
+            <ToastTitle><Text>{ToastMessage.value.message}</Text></ToastTitle>
           </Toast>
 
         );

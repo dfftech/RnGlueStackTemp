@@ -63,18 +63,16 @@ const AppLayout = () => {
 
   return (
     <I18nextProvider i18n={i18n}>
-      <SafeAreaView className="flex-1 justify-end">
+      <SafeAreaView className="flex-1 justify-end bg-gray-100 dark:bg-black">
         <AppToast />
         {/* <AppHeader /> */}
-        <Box className="flex-1">
+        <Box className="flex-1 overflow-y-auto ">
           <Stack
             initialRouteName="splash"
-            screenOptions={{ headerShown: false, gestureEnabled: false }}
+            screenOptions={{ headerShown: false, gestureEnabled: true }}
           />
+          <Box className='h-[70px]' />
         </Box>
-
-
-
         <AppNavBar
           icons={[
             'Home',
@@ -88,7 +86,7 @@ const AppLayout = () => {
           cb={(id: number) => setPage(id)}
         />
       </SafeAreaView>
-    </I18nextProvider>
+    </I18nextProvider >
   );
 };
 

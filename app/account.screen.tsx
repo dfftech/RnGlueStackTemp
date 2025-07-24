@@ -1,21 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text } from '@/components/ui/text';
-import { SafeAreaView } from '@/components/ui/safe-area-view';
+import { ScrollView } from 'react-native';
+import AccountPage from '@/modules/account/account.page';
 
 
 const AccountScreen: React.FC = () => {
   return (
-    <SafeAreaView className="flex-1 bg-background">
-      <View className="flex-1 justify-center items-center p-4">
-        <Text className="text-xl font-semibold text-foreground">
-          Account Screen
-        </Text>
-        <Text className="text-sm text-muted-foreground mt-2 text-center">
-          This is the account screen. Add your account management functionality here.
-        </Text>
-      </View>
-    </SafeAreaView>
+    <ScrollView>
+      <AccountPage />
+    </ScrollView>
   );
 };
 
