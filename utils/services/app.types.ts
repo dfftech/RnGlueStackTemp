@@ -1,32 +1,15 @@
+import {AllLanguageCodesType} from 'dff-util';
+
+export type SupportedLanguagesType = Extract<
+  AllLanguageCodesType,
+  'en-US' | 'te-IN' | 'kn-IN' | 'ta-IN' | 'hi-IN' | 'ml-IN' | 'ar-SA'
+>;
+
+export type TranslationType = Record<SupportedLanguagesType, string>;
+
 export type RouterType = {
   screen: string;
   query?: Record<string, string>;
-};
-
-export type AuthStateType = {
-  token: string | null;
-  isAuthenticated: boolean;
-  userId: string | null;
-};
-
-export type CountryType = {
-  _id: string;
-  name: string;
-  nameLocal: string;
-  googleNames: string[];
-  currencyCode: string;
-  currencyHex: string;
-  telCode: string;
-  flag: string;
-  flagUrl: string;
-  active: boolean;
-};
-
-export type FileType = {
-  filename: string;
-  mimetype: string;
-  url: string;
-  _id: string;
 };
 
 export interface SearchType {
@@ -45,32 +28,10 @@ export type ToastType = {
   type: 'success' | 'error' | 'info' | 'warning';
 };
 
-export type ModalType = {
-  show: boolean;
-  title: string;
-  body: string;
-  primaryAction: {
-    label: string;
-    action: () => void;
-  };
-  secondaryAction: {
-    label: string;
-    action: () => void;
-  };
+export type ScreenAccessType = {
+  name: string;
+  read: boolean;
+  create: boolean;
+  update: boolean;
+  delete: boolean;
 };
-
-export interface SearchType {
-  query: string | number;
-}
-
-export interface SiteInfoType {
-  _id: string;
-  summary: string;
-  title: string;
-  active?: boolean;
-  img?: string;
-  video?: string;
-  order?: number;
-  page: string;
-  subTitle?: string;
-}

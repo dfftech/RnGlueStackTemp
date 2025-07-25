@@ -35,7 +35,7 @@ const AppLayout = () => {
   }, [page]);
 
   useEffect(() => {
-    AppHttp.getInstance();
+    AppHttp.BaseUrl;
     const unsubscribe = effect(() => {
       const screen = RouterEvent.value.screen;
       const params = RouterEvent.value.query;
