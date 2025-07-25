@@ -17,7 +17,7 @@ export default function SignInPage() {
     <Box className="flex-1 px-4 py-4 items-center justify-center">
       <VStack space="xl" style={{ alignItems: 'center' }}>
         <Heading size="4xl" style={{ textAlign: 'center' }}>
-          {t('welcome')}
+          {t('welcome')} {t('signIn')}
         </Heading>
         <Text size="lg" style={{ textAlign: 'center' }}>
           {t('description')}
@@ -33,14 +33,6 @@ export default function SignInPage() {
             <Text>• {t('featuresTheme')}</Text>
             <Text>• {t('featuresModern')}</Text>
             <Text>•  ColorMode: {ColorMode.value}</Text>
-            <Button
-              variant="solid"
-              onPress={() => {
-                RouterChange(AppRouter.home, undefined);
-              }}
-            >
-              <ButtonText>{t('goToHome')}</ButtonText>
-            </Button>
           </VStack>
         </Box>
       </VStack>
