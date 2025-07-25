@@ -6,12 +6,12 @@ const API_BASE_URL = 'https://apidev.module.org';
 
 export default class AppHttp {
   static MsUrl = {
-    base: API_BASE_URL + '/astropeace-base/',
-    auth: API_BASE_URL + '/astropeace-auth/',
-    util: API_BASE_URL + '/astropeace-util/',
-    main: API_BASE_URL + '/astropeace-main/',
-    sor: API_BASE_URL + '/astropeace-sor/',
-    events: API_BASE_URL + '/astropeace-events/',
+    base: '/astropeace-base',
+    auth: '/astropeace-auth',
+    util: '/astropeace-util',
+    main: '/astropeace-main',
+    sor: '/astropeace-sor',
+    events: '/astropeace-events',
   };
 
   static Headers() {
@@ -46,11 +46,12 @@ export default class AppHttp {
     return await Http.Post(url + '/' + id, params, headers);
   }
 
+  static async Delete(url: string, id: string, params?: Record<string, any>) {
+    const headers = {...AppHttp.Headers()};
+    return await Http.Delete(url + '/' + id, params, headers);
+  }
+
   static async CloudUpload(url: string, file: File) {
     return await Http.CloudUpload(url, file);
   }
 }
-
-export const MsUrl = {};
-
-export const URLEndPoints = {};
